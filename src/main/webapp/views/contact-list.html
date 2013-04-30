@@ -4,7 +4,6 @@
 
     <ul>
         <li ng-repeat="contact in contacts">
-            <a href="#/contact/{{contact.id}}"><span class="contactTitle">{{contact.title}}</span></a> :
             <span class="contactDescription">{{contact.firstname}} {{contact.lastname}} {{contact.email}} {{contact.telephone}}</span> &nbsp;
             <button class="button" ng-click="deleteContact(contact)">X</button>
         </li>

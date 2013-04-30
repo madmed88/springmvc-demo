@@ -12,14 +12,6 @@ function ContactListController($scope, $location, Contact) {
     };
 }
 
-function ContactDetailController($scope, $routeParams, $location, Contact) {
-    $scope.contact = Contact.get({id:$routeParams.id}, function (contact) {
-    });
-    $scope.gotoContactListPage = function () {
-        $location.path("/");
-    };
-}
-
 function ContactNewController($scope, $location, Contact) {
     $scope.submit = function () {
         Contact.save($scope.contact, function (contact) {
