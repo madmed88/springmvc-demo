@@ -1,5 +1,7 @@
 package com.madmed.springmvcdemo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.madmed.springmvcdemo.form.Contact;
@@ -10,8 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
  
 @Controller
 public class ContactController {
@@ -19,30 +25,20 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
  
-    @RequestMapping("/index")
-    public String listContacts(Map<String, Object> map) {
- 
-        map.put("contact", new Contact());
-        map.put("contactList", contactService.listContact());
- 
-        return "contact";
+    @RequestMapping(value = "/contact", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Contact> list() {
+        return new ArrayList<Contact>(contactService.listContact());
+    }
+    
+    @RequestMapping(value = "/contact", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void create(@RequestBody Contact contact) {
+    	contactService.addContact(contact);
     }
  
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addContact(@ModelAttribute("contact")
-    Contact contact, BindingResult result) {
- 
-        contactService.addContact(contact);
- 
-        return "redirect:/index";
-    }
- 
-    @RequestMapping("/delete/{contactId}")
-    public String deleteContact(@PathVariable("contactId")
-    Integer contactId) {
- 
-        contactService.removeContact(contactId);
- 
-        return "redirect:/index";
+    @RequestMapping(value = "/contact/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
+    	contactService.removeContact(id);
     }
 }
