@@ -3,6 +3,7 @@ package com.madmed.springmvcdemo.form;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,20 +12,20 @@ import javax.persistence.Table;
 public class Contact {
 	
 	@Id
-	@Column(name="ID")
-	@GeneratedValue
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name="FIRSTNAME")
+	@Column(name="firstname")
 	private String firstname;
 	
-	@Column(name="LASTNAME")
+	@Column(name="lastname")
 	private String lastname;
 	
-	@Column(name="EMAIL")
+	@Column(name="email")
 	private String email;
 	
-	@Column(name="TELEPHONE")
+	@Column(name="Telephone")
 	private String Telephone;
 
 	public Integer getId() {
